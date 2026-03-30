@@ -1,0 +1,10 @@
+cat > infrastructure/helm/prometheus/values.yaml << 'EOF'
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    adminPassword: "admin123"
+  prometheus:
+    enabled: true
+  alertmanager:
+    enabled: false
+EOF
