@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  # Name of this ApplicationSet
+  name: dev-01-core-components
+  namespace: argocd
+spec:
+  # ---------------------------------------------------
+  # Generator — defines the list of apps to create
+  # ArgoCD creates one Application per element
+  # ---------------------------------------------------
+  generators:
+    - list:
+        elements:
+          - app: metrics-server
+            namespace: kube-system
+          - app: ebs-csi-driver
+            namespace: kube-system
+          - app: aws-load-balancer-controller
+            namespace: kube-system
+          - app: external-secrets
+            namespace: external-secrets
+          - app: prometheus
+            namespace: monitoring
+
+  # ---------------------------------------------------
+  # Template — blueprint for each Application
+  # {{app}} and {{namespace}} are replaced per element
+  # ---------------------------------------------------
+  template:
+    metadata:
+      name: "{{app}}"
+    spec:
+      project: default
+      source:
+        # Your public Helm charts repo
+        repoURL: https://github.com/deploydaily/k8s.git
+        targetRevision: HEAD
+        # Path matches the folder name in your repo
+        path: "{{app}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          # Delete resources removed from Git
+          prune: true
+          # Revert manual changes to match Git
+          selfHeal: true
+        syncOptions:
+          # Auto-create namespace if it doesn't exist
+          - CreateNamespace=true
