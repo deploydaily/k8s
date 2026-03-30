@@ -1,5 +1,0 @@
-aws-ebs-csi-driver:
-  controller:
-    serviceAccount:
-      create: true
-      name: ebs-csi-controller-sa
