@@ -1,0 +1,5 @@
+aws-load-balancer-controller:
+  clusterName: dev-01
+  serviceAccount:
+    create: true
+    name: aws-load-balancer-controller

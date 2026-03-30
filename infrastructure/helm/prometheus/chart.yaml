@@ -1,7 +1,0 @@
-cat > infrastructure/helm/prometheus/Chart.yaml << 'EOF'
-apiVersion: v2
-name: prometheus
-description: Prometheus monitoring stack
-type: application
-version: 1.0.0
-EOF

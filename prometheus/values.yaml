@@ -1,4 +1,3 @@
-cat > infrastructure/helm/prometheus/values.yaml << 'EOF'
 kube-prometheus-stack:
   grafana:
     enabled: true
@@ -7,4 +6,3 @@ kube-prometheus-stack:
     enabled: true
   alertmanager:
     enabled: false
-EOF
